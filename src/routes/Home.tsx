@@ -1,30 +1,43 @@
 import { useNavigate } from "react-router-dom";
+import { Card, Divider, Grid, Image } from "semantic-ui-react";
+import Watch from "../static/img/watch.png";
 
 export const Home = (props: { data: any; setGame: any }) => {
-  const navigate = useNavigate();
   const games = props.data?.values?.[0].map(JSON.parse);
+  return <HomeGames {...{ games, setGame: props.setGame }} />;
+};
+const HomeGames = ({ games, setGame }: any) => {
   return (
-    <div>
-      {games?.map((g: any, i: number) => (
-        <div
-          key={i}
-          onClick={() => {
-            props.setGame(g);
-            navigate("/game");
-          }}
-        >
-          <p>***********</p>
-          <h3>League: {g.league}</h3>
-          <p>Date: {g.time}</p>
-          {/* <p>{g.link}</p>  not relevant */}
-          <p>{g.links.toString()}</p>
-          <p>
-            {g.teams.homeTeam} vs {g.teams.awayTeam}
-          </p>
-          <p>***********</p>
-        </div>
+    <Grid columns={4} doubling>
+      {games?.map((game: any) => (
+        <Grid.Column>
+          <HomeGame {...{ game, setGame }} />
+        </Grid.Column>
       ))}
-    </div>
+    </Grid>
   );
-  //   return <div>{JSON.stringify(games)}</div>;
+};
+
+const HomeGame = ({ game, setGame }: any) => {
+  const navigate = useNavigate();
+  return (
+    <Card
+      onClick={() => {
+        setGame(game);
+        navigate("/Game");
+      }}
+    >
+      <Card.Content>
+        <Card.Header textAlign="center">
+          {game.teams.homeTeam} vs {game.teams.awayTeam}
+        </Card.Header>
+        <Divider />
+        <Image floated="right" size="mini" src={Watch} />
+        <Card.Meta style={{ paddingLeft: 10 }}>{game.time}</Card.Meta>
+        <Card.Meta style={{ paddingLeft: 10 }}>
+          <b>{game.league}</b>
+        </Card.Meta>
+      </Card.Content>
+    </Card>
+  );
 };
