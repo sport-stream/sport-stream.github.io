@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Card, Divider, Grid, Image } from "semantic-ui-react";
+import { Card, Divider, Grid, Image, Label } from "semantic-ui-react";
 import Watch from "../static/img/watch.png";
 
 export const Home = (props: { data: any; setGame: any }) => {
@@ -34,9 +34,7 @@ const HomeGame = ({ game, setGame }: any) => {
         <Divider />
         <Image floated="right" size="mini" src={Watch} />
         <Card.Meta style={{ paddingLeft: 10 }}>{game.time}</Card.Meta>
-        <Card.Meta style={{ paddingLeft: 10 }}>
-          <b>{game.league}</b>
-        </Card.Meta>
+        <Label>{game.league}</Label>
       </Card.Content>
     </Card>
   );

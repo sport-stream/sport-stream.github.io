@@ -5,7 +5,7 @@ import { Game } from "../routes/Game";
 import { Home } from "../routes/Home";
 
 import { useFetch } from "../hooks/useFetch";
-import { Container } from "semantic-ui-react";
+import { Container, Dimmer, Loader } from "semantic-ui-react";
 
 const SHEET_ID = "15dkqaVpI8xbAOP7pQfQlHRfqV-l_jQVPt-ni8nMw62Y";
 const PUBLIC_API_KEY = "AIzaSyCqYJKdcZo3j6wI6HLmJrUnCP92L-iuE7I";
@@ -26,7 +26,9 @@ const Body = (props: any) => {
   return (
     <Container style={{ marginTop: "7em" }}>
       {error ? <p>{JSON.stringify(error)} </p> : null}
-      {loading ? <p>Loading Games...</p> : null}
+      <Dimmer active={loading}>
+        <Loader size="massive">Loading</Loader>
+      </Dimmer>
       <Routes>
         <Route path="/" element={<Home {...{ data, setGame }} />} />
         <Route path="/Games" element={<Home {...{ data, setGame }} />} />
