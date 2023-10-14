@@ -2,19 +2,48 @@ import { useNavigate } from "react-router-dom";
 import { Card, Divider, Image, Label } from "semantic-ui-react";
 import Watch from "../static/img/watch.png";
 import { formatDateTime } from "../utils/date";
+import { Ads } from "../ads";
 
 export const Home = (props: { data: any; setGame: any }) => {
   const games = props.data?.values?.[0].map(JSON.parse);
-  return <HomeGames {...{ games, setGame: props.setGame }} />;
+  return (
+    <>
+      <Ads />
+      <Divider />
+      <HomeGames {...{ games, setGame: props.setGame }} />;
+      <Ads />
+    </>
+  );
 };
 
 const HomeGames = ({ games, setGame }: any) => {
+  // insert an ad between every 10 games
+  // split games into chunks of 10
+  const chunkedGames = games.reduce(
+    (acc: any, game: any) => {
+      const lastChunk = acc[acc.length - 1];
+      if (lastChunk.length === 24) {
+        acc.push([game]);
+      } else {
+        lastChunk.push(game);
+      }
+      return acc;
+    },
+    [[]]
+  );
   return (
-    <Card.Group centered>
-      {games?.map((game: any) => (
-        <HomeGame {...{ game, setGame }} />
+    <>
+      {chunkedGames.map((chunk: any) => (
+        <>
+          <Card.Group centered>
+            {chunk.map((game: any) => (
+              <HomeGame {...{ game, setGame }} />
+            ))}
+          </Card.Group>
+          <Ads />
+        </>
       ))}
-    </Card.Group>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ import { Game } from "../routes/Game";
 import { Home } from "../routes/Home";
 
 import { useFetch } from "../hooks/useFetch";
-import { Container, Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer, Loader } from "semantic-ui-react";
 
 const SHEET_ID = "15dkqaVpI8xbAOP7pQfQlHRfqV-l_jQVPt-ni8nMw62Y";
 const PUBLIC_API_KEY = "AIzaSyCqYJKdcZo3j6wI6HLmJrUnCP92L-iuE7I";
@@ -35,6 +35,9 @@ const Body = (props: any) => {
         <Route path="/Game" element={<Game {...{ game, setVideo }} />} />
         <Route path="/Video" element={<Video {...{ game, video }} />} />
       </Routes>
+      <br />
+      <br />
+      <br />
     </div>
   );
 };
