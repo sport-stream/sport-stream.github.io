@@ -1,14 +1,85 @@
 import { useNavigate } from "react-router-dom";
-import { Card, Divider, Image, Label } from "semantic-ui-react";
+import {
+  Card,
+  Container,
+  Divider,
+  Dropdown,
+  Image,
+  Input,
+  Label,
+  Segment,
+} from "semantic-ui-react";
 import Watch from "../static/img/watch.png";
 import { formatDateTime } from "../utils/date";
 import { Ads } from "../ads";
+import React from "react";
+
+const defaultLeagueOption = {
+  key: "empty",
+  text: "Select League",
+  value: "Select League",
+};
+
+const SearchGames = ({
+  leagues,
+  setLeague,
+  setSearch,
+}: {
+  leagues: unknown[];
+  setLeague: any;
+  setSearch: any;
+}) => (
+  <Container textAlign="center">
+    <Segment>
+      <Input
+        onChange={(_e, { value }) => setSearch(value)}
+        action={
+          <Dropdown
+            button
+            basic
+            floating
+            onChange={(_e, { value }) => setLeague(value)}
+            options={[
+              defaultLeagueOption,
+              ...(leagues as string[]).map((league: string) => ({
+                key: league,
+                text: league,
+                value: league,
+              })),
+            ]}
+            defaultValue="Select League"
+          />
+        }
+        icon="search"
+        iconPosition="left"
+        placeholder="Search Game or League..."
+      />
+    </Segment>
+  </Container>
+);
 
 export const Home = (props: { data: any; setGame: any }) => {
-  const games = props.data?.values?.[0].map(JSON.parse);
+  const allGames = props.data?.values?.[0].map(JSON.parse);
+  const leagues = Array.from(
+    new Set(allGames?.map((game: any) => game.league)) || []
+  ).sort();
+  const [league, setLeague] = React.useState<string | null>(null);
+  const [search, setSearch] = React.useState<string | null>(null);
+
+  const games = allGames
+    ?.filter((game: any) => !league || game.league === league)
+    .filter(
+      (game: any) =>
+        !search ||
+        game.teams.homeTeam.includes(search) ||
+        game.teams.awayTeam.includes(search) ||
+        game.league.includes(search)
+    );
   return (
     <>
       <Ads />
+      <Divider />
+      <SearchGames {...{ leagues, setLeague, setSearch }} />
       <Divider />
       <HomeGames {...{ games, setGame: props.setGame }} />;
       <Ads />
