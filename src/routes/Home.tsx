@@ -71,9 +71,9 @@ export const Home = (props: { data: any; setGame: any }) => {
     .filter(
       (game: any) =>
         !search ||
-        game.teams.homeTeam.includes(search) ||
-        game.teams.awayTeam.includes(search) ||
-        game.league.includes(search)
+        game.teams.homeTeam.toLowerCase().includes(search.toLowerCase()) ||
+        game.teams.awayTeam.toLowerCase().includes(search.toLowerCase()) ||
+        game.league.toLowerCase().includes(search.toLowerCase())
     );
   return (
     <>
