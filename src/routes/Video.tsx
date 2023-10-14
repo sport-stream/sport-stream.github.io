@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Dimmer, Loader } from "semantic-ui-react";
+import { Ads } from "../ads";
 
 const getUrlParameter = (name: string) => {
   return window.location.search.split(`${name}=`)[1].split("&")[0];
@@ -11,7 +12,7 @@ export const Video = (props: any) => {
     video = { link: atob(getUrlParameter("v")) };
   }
   const [loading, setLoading] = React.useState(true);
-
+  // TODO loading timeout navigate back
   if (!video) return null;
   return (
     <Container>
@@ -19,6 +20,7 @@ export const Video = (props: any) => {
         <Dimmer active={loading}>
           <Loader size="massive">Loading</Loader>
         </Dimmer>
+        <Ads />
         <iframe
           onLoad={() => setLoading(false)}
           title="sports streams, football, soccer, nfl, nhl, nba"
@@ -30,6 +32,7 @@ export const Video = (props: any) => {
           }}
           src={video?.link}
         ></iframe>
+        <Ads />
       </Container>
     </Container>
   );

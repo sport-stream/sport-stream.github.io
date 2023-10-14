@@ -17,8 +17,6 @@ export const Home = (props: { data: any; setGame: any }) => {
 };
 
 const HomeGames = ({ games, setGame }: any) => {
-  // insert an ad between every 10 games
-  // split games into chunks of 10
   const chunkedGames = games?.reduce(
     (acc: any, game: any) => {
       const lastChunk = acc[acc.length - 1];

@@ -10,11 +10,12 @@ import {
 } from "semantic-ui-react";
 import Watch from "../static/img/watch.png";
 import { formatDateTime } from "../utils/date";
+import { Ads } from "../ads";
 // import CopyLinkIcon from "../static/img/copyLink.png";
 
 export const Game = (props: any) => {
   const game = props.game;
-  const formattedDate = formatDateTime(game.time);
+  const formattedDate = formatDateTime(game?.time);
   if (!game) return null;
   return (
     <Segment style={{ backgroundColor: "white" }}>
@@ -22,12 +23,16 @@ export const Game = (props: any) => {
         {game.teams.homeTeam} <span> vs </span> {game.teams.awayTeam}
       </Header>
       <Divider />
+      <Ads />
+      <Divider />
       <p>
         <b>{formattedDate}</b>
       </p>
       <Label>{game.league}</Label>
       <Divider />
       <GameLinks {...{ links: game.links, setVideo: props.setVideo }} />
+      <Divider />
+      <Ads />
     </Segment>
   );
 };

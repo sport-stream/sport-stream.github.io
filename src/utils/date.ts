@@ -1,4 +1,5 @@
 export const formatDateTime = (gameTime: string) => {
+  if (!gameTime) return new Date().toLocaleString("en-US");
   const [day, month, _at, time] = gameTime.split(" ");
   const formattedDate = new Date();
   formattedDate.setUTCDate(Number(day));
