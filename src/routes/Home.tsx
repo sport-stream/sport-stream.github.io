@@ -1,41 +1,71 @@
 import { useNavigate } from "react-router-dom";
-import { Card, Divider, Grid, Image, Label } from "semantic-ui-react";
+import { Card, Divider, Image, Label } from "semantic-ui-react";
 import Watch from "../static/img/watch.png";
+import { formatDateTime } from "../utils/date";
 
 export const Home = (props: { data: any; setGame: any }) => {
   const games = props.data?.values?.[0].map(JSON.parse);
   return <HomeGames {...{ games, setGame: props.setGame }} />;
 };
+
 const HomeGames = ({ games, setGame }: any) => {
   return (
-    <Grid columns={4} doubling>
+    <Card.Group centered>
       {games?.map((game: any) => (
-        <Grid.Column>
-          <HomeGame {...{ game, setGame }} />
-        </Grid.Column>
+        <HomeGame {...{ game, setGame }} />
       ))}
-    </Grid>
+    </Card.Group>
   );
 };
 
 const HomeGame = ({ game, setGame }: any) => {
   const navigate = useNavigate();
+  const formattedDate = formatDateTime(game.time);
+
   return (
     <Card
       onClick={() => {
         setGame(game);
         navigate("/Game");
       }}
+      color="yellow"
     >
       <Card.Content>
-        <Card.Header textAlign="center">
-          {game.teams.homeTeam} vs {game.teams.awayTeam}
+        <Card.Header
+          textAlign="center"
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            fontSize: 16,
+          }}
+        >
+          <u>
+            {game.teams.homeTeam} - {game.teams.awayTeam}
+          </u>
         </Card.Header>
+        <Image
+          style={{ paddingTop: 20 }}
+          floated="right"
+          size="mini"
+          src={Watch}
+        />
         <Divider />
-        <Image floated="right" size="mini" src={Watch} />
-        <Card.Meta style={{ paddingLeft: 10 }}>{game.time}</Card.Meta>
-        <Label>{game.league}</Label>
+        <Card.Meta style={{ paddingLeft: 10, marginBottom: 30 }}>
+          {formattedDate}
+        </Card.Meta>
       </Card.Content>
+      <Label
+        attached="bottom"
+        color="black"
+        style={{
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {game.league}
+      </Label>
     </Card>
   );
 };

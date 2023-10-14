@@ -24,7 +24,7 @@ const Body = (props: any) => {
   const [game, setGame] = React.useState<any>(null);
   const [video, setVideo] = React.useState<any>(null);
   return (
-    <Container style={{ marginTop: "7em" }}>
+    <div style={{ marginTop: "7em" }}>
       {error ? <p>{JSON.stringify(error)} </p> : null}
       <Dimmer active={loading}>
         <Loader size="massive">Loading</Loader>
@@ -35,7 +35,7 @@ const Body = (props: any) => {
         <Route path="/Game" element={<Game {...{ game, setVideo }} />} />
         <Route path="/Video" element={<Video {...{ game, video }} />} />
       </Routes>
-    </Container>
+    </div>
   );
 };
 export default Body;
