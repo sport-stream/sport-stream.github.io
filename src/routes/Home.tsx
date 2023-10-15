@@ -13,13 +13,13 @@ import Watch from "../static/img/watch.png";
 import { formatDateTime } from "../utils/date";
 import { Ads } from "../ads";
 import React from "react";
+import { transliterate } from "../utils/lang";
 
 const defaultLeagueOption = {
   key: "empty",
   text: "Select League",
   value: "Select League",
 };
-
 const SearchGames = ({
   leagues,
   setLeague,
@@ -63,18 +63,30 @@ export const Home = (props: { data: any; setGame: any }) => {
   const leagues = Array.from(
     new Set(allGames?.map((game: any) => game.league)) || []
   ).sort();
+
+  // filters
   const [league, setLeague] = React.useState<string | null>(null);
   const [search, setSearch] = React.useState<string | null>(null);
 
   const games = allGames
-    ?.filter((game: any) => !league || game.league === league)
-    .filter(
+    ?.filter(
       (game: any) =>
-        !search ||
-        game.teams.homeTeam.toLowerCase().includes(search.toLowerCase()) ||
-        game.teams.awayTeam.toLowerCase().includes(search.toLowerCase()) ||
-        game.league.toLowerCase().includes(search.toLowerCase())
-    );
+        !league || league === "Select League" || game.league === league
+    )
+    .filter((game: any) => {
+      if (!search) return true;
+      const searchLower: string = search.toLowerCase();
+      const homeTeam: string = transliterate(game.teams.homeTeam).toLowerCase();
+      const homeCondition = `${homeTeam}`.includes(searchLower);
+      if (homeCondition) return true;
+      const awayTeam: string = transliterate(game.teams.awayTeam).toLowerCase();
+      const awayCondition = `${awayTeam}`.includes(searchLower);
+      if (awayCondition) return true;
+      const league: string = transliterate(game.league).toLowerCase();
+      const leagueCondition = `${league}`.includes(searchLower);
+      return leagueCondition;
+    });
+
   return (
     <>
       <Ads />
