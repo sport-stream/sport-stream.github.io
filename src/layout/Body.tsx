@@ -42,8 +42,8 @@ const Body = (props: any) => {
       <Routes>
         <Route path="/" element={<Home {...{ data, setGame }} />} />
         <Route path="/Games" element={<Home {...{ data, setGame }} />} />
-        <Route path="/Game" element={<Game {...{ game, setVideo }} />} />
-        <Route path="/Video" element={<Video {...{ game, video }} />} />
+        <Route path="/Games/Game" element={<Game {...{ game, setVideo }} />} />
+        <Route path="/Games/Video" element={<Video {...{ game, video }} />} />
       </Routes>
       <br />
       <br />

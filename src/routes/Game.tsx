@@ -60,7 +60,7 @@ const GameLink = ({ rate, link, setVideo }: any) => {
         onClick={() => {
           setVideo({ rate, link });
           const encodedLink = btoa(link);
-          navigate(`/Video?v=${encodedLink}`);
+          navigate(`/Games/Video?v=${encodedLink}`);
         }}
       >
         <Card.Content>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Container, Menu, Image, Dropdown } from "semantic-ui-react";
+import { Container, Menu, Image } from "semantic-ui-react";
 import Watch from "../static/img/watch.png";
 
 const Header = (props: any) => {

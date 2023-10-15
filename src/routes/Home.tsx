@@ -136,7 +136,7 @@ const HomeGame = ({ game, setGame }: any) => {
     <Card
       onClick={() => {
         setGame(game);
-        navigate("/Game");
+        navigate("/Games/Game");
       }}
       color="yellow"
     >
