@@ -9,6 +9,7 @@ export const transliterate = function (text: string) {
     і: "i",
     І: "I",
     р: "p",
+    Р: "P",
     о: "o",
   };
   const trans = (text: string, letter: keyof typeof dictionary) => {

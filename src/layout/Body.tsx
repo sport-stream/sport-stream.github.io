@@ -11,26 +11,20 @@ const SHEET_ID = "15dkqaVpI8xbAOP7pQfQlHRfqV-l_jQVPt-ni8nMw62Y";
 const PUBLIC_API_KEY = "AIzaSyCqYJKdcZo3j6wI6HLmJrUnCP92L-iuE7I";
 
 const getTodaySheet = () => {
-  const todayDate = new Date().toLocaleDateString("en-US");
-  // change todayTate to format YYYY-MM-DD
-  const newFormat = todayDate.split("/").reverse().join("-");
-  return `${newFormat}-Games`;
-};
-const getYesterDaySheet = () => {
-  const date = new Date();
-  date.setDate(date.getDate() - 1);
-  const yesterdayDate = date.toLocaleDateString("en-US");
-  const newFormat = yesterdayDate.split("/").reverse().join("-");
+  // subtract 5 minutes to avoid timezone issues
+  const todayDate = new Date();
+  todayDate.setMinutes(todayDate.getMinutes() - 15);
+
+  const newFormat = `${todayDate.getFullYear()}-${todayDate.getDate()}-${
+    todayDate.getMonth() + 1
+  }`;
   return `${newFormat}-Games`;
 };
 
 const Body = (props: any) => {
-  const [sheet, setSheet] = React.useState<string>(getTodaySheet());
-  const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheet}!1:1?key=${PUBLIC_API_KEY}`;
+  const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${getTodaySheet()}!1:1?key=${PUBLIC_API_KEY}`;
   const { data, error, loading } = useFetch(sheetUrl);
-  if ((error || !data?.length) && sheet === getTodaySheet()) {
-    setSheet(getYesterDaySheet());
-  }
+
   const [game, setGame] = React.useState<any>(null);
   const [video, setVideo] = React.useState<any>(null);
 

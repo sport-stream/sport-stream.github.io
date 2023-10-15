@@ -5,13 +5,11 @@ const Header = (props: any) => {
   return (
     <Menu fixed="top" inverted>
       <Container>
-        <Menu.Item header>
-          {/* <Menu.Item as={Link} to="/Games" header> */}
+        <Menu.Item as="a" href="/Games" header>
           <Image size="mini" src={Watch} style={{ marginRight: "1.5em" }} />
           Nivdal Global
         </Menu.Item>
-        <Menu.Item>
-          {/* <Menu.Item as={Link} to="/Games"> */}
+        <Menu.Item as="a" href="/Games">
           Home
         </Menu.Item>
       </Container>
