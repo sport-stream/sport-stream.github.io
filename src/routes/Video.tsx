@@ -1,10 +1,7 @@
 import React from "react";
 import { Container, Dimmer, Loader } from "semantic-ui-react";
 import { Ads } from "../ads";
-
-const getUrlParameter = (name: string) => {
-  return window.location.search.split(`${name}=`)[1].split("&")[0];
-};
+import { getUrlParameter } from "../utils/url";
 
 export const Video = (props: any) => {
   let video = props.video;

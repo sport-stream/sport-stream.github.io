@@ -1,11 +1,11 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
 import { Video } from "../routes/Video";
 import { Game } from "../routes/Game";
 import { Home } from "../routes/Home";
 
 import { useFetch } from "../hooks/useFetch";
 import { Dimmer, Loader } from "semantic-ui-react";
+import { getUrlParameter } from "../utils/url";
 
 const SHEET_ID = "15dkqaVpI8xbAOP7pQfQlHRfqV-l_jQVPt-ni8nMw62Y";
 const PUBLIC_API_KEY = "AIzaSyCqYJKdcZo3j6wI6HLmJrUnCP92L-iuE7I";
@@ -33,18 +33,29 @@ const Body = (props: any) => {
   }
   const [game, setGame] = React.useState<any>(null);
   const [video, setVideo] = React.useState<any>(null);
+
+  const page = getUrlParameter("page");
+  let BodyPage = <Home {...{ data, setGame }} />;
+
+  switch (page) {
+    case "Game":
+      BodyPage = <Game {...{ game, setVideo }} />;
+      break;
+    case "Video":
+      BodyPage = <Video {...{ game, video }} />;
+      break;
+    case "Home":
+    default:
+      break;
+  }
+
   return (
     <div style={{ marginTop: "7em" }}>
       {error ? <p>{JSON.stringify(error)} </p> : null}
       <Dimmer active={loading}>
         <Loader size="massive">Loading</Loader>
       </Dimmer>
-      <Routes>
-        <Route path="/" element={<Home {...{ data, setGame }} />} />
-        <Route path="/Games" element={<Home {...{ data, setGame }} />} />
-        <Route path="/Games/Game" element={<Game {...{ game, setVideo }} />} />
-        <Route path="/Games/Video" element={<Video {...{ game, video }} />} />
-      </Routes>
+      {BodyPage}
       <br />
       <br />
       <br />

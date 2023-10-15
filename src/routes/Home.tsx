@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   Card,
   Container,
@@ -9,6 +8,7 @@ import {
   Label,
   Segment,
 } from "semantic-ui-react";
+import { useNavigate } from "react-router-dom";
 import Watch from "../static/img/watch.png";
 import { formatDateTime } from "../utils/date";
 import { Ads } from "../ads";
@@ -136,7 +136,7 @@ const HomeGame = ({ game, setGame }: any) => {
     <Card
       onClick={() => {
         setGame(game);
-        navigate("/Games/Game");
+        navigate("?page=Game");
       }}
       color="yellow"
     >
