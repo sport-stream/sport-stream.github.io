@@ -8,7 +8,7 @@ import {
   Label,
   Segment,
 } from "semantic-ui-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Watch from "../static/img/watch.png";
 import { formatDateTime } from "../utils/date";
 import { Ads } from "../ads";
@@ -25,10 +25,12 @@ const SearchGames = ({
   leagues,
   setLeague,
   setSearch,
+  search,
 }: {
   leagues: unknown[];
   setLeague: any;
   setSearch: any;
+  search: string | null;
 }) => (
   <Container textAlign="center">
     <Segment>
@@ -54,6 +56,7 @@ const SearchGames = ({
         icon="search"
         iconPosition="left"
         placeholder="Search Game or League..."
+        value={search}
       />
     </Segment>
   </Container>
@@ -63,6 +66,14 @@ export const Home = (props: { data: any }) => {
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
+  const location = useLocation();
+  const [search, setSearch] = React.useState<string | null>(null);
+  useEffect(() => {
+    const parameters = new URLSearchParams(location.search);
+    const sQuery = parameters.get("s");
+    setSearch(sQuery);
+  }, [location]);
+
   const allGames = props.data?.values?.[0].map(JSON.parse);
   const leagues = Array.from(
     new Set(allGames?.map((game: any) => game.league)) || []
@@ -70,7 +81,6 @@ export const Home = (props: { data: any }) => {
 
   // filters
   const [league, setLeague] = React.useState<string | null>(null);
-  const [search, setSearch] = React.useState<string | null>(null);
 
   const games = allGames
     ?.filter(
@@ -95,7 +105,7 @@ export const Home = (props: { data: any }) => {
     <>
       <Ads />
       <Divider />
-      <SearchGames {...{ leagues, setLeague, setSearch }} />
+      <SearchGames {...{ leagues, setLeague, setSearch, search }} />
       <Divider />
       <HomeGames {...{ games }} />;
       <Ads />
