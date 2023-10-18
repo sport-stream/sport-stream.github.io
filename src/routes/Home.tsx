@@ -12,8 +12,9 @@ import { useNavigate } from "react-router-dom";
 import Watch from "../static/img/watch.png";
 import { formatDateTime } from "../utils/date";
 import { Ads } from "../ads";
-import React from "react";
+import React, { useEffect } from "react";
 import { transliterate } from "../utils/lang";
+import ReactGA from "react-ga";
 
 const defaultLeagueOption = {
   key: "empty",
@@ -59,6 +60,9 @@ const SearchGames = ({
 );
 
 export const Home = (props: { data: any; setGame: any }) => {
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
   const allGames = props.data?.values?.[0].map(JSON.parse);
   const leagues = Array.from(
     new Set(allGames?.map((game: any) => game.league)) || []
