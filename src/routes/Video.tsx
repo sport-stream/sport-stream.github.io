@@ -1,14 +1,15 @@
 import React from "react";
 import { Container, Dimmer, Loader } from "semantic-ui-react";
 import { Ads } from "../ads";
-import { getUrlParameter } from "../utils/url";
+import { useLocation } from "react-router-dom";
 
-export const Video = (props: any) => {
-  let video = props.video;
-  if (!video) {
-    video = { link: atob(getUrlParameter("v")) };
-  }
+export const Video = () => {
+  const { search } = useLocation();
+  const parameters = new URLSearchParams(search);
+  const videoHashed = parameters.get("v");
+  const video = atob(videoHashed || "");
   const [loading, setLoading] = React.useState(true);
+
   // TODO loading timeout navigate back
   if (!video) return null;
   return (
@@ -27,7 +28,7 @@ export const Video = (props: any) => {
             border: "none",
             overflow: "hidden",
           }}
-          src={video?.link}
+          src={video}
         ></iframe>
         <Ads />
       </Container>

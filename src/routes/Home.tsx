@@ -59,7 +59,7 @@ const SearchGames = ({
   </Container>
 );
 
-export const Home = (props: { data: any; setGame: any }) => {
+export const Home = (props: { data: any }) => {
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
@@ -97,13 +97,13 @@ export const Home = (props: { data: any; setGame: any }) => {
       <Divider />
       <SearchGames {...{ leagues, setLeague, setSearch }} />
       <Divider />
-      <HomeGames {...{ games, setGame: props.setGame }} />;
+      <HomeGames {...{ games }} />;
       <Ads />
     </>
   );
 };
 
-const HomeGames = ({ games, setGame }: any) => {
+const HomeGames = ({ games }: any) => {
   const chunkedGames = games?.reduce(
     (acc: any, game: any) => {
       const lastChunk = acc[acc.length - 1];
@@ -122,7 +122,7 @@ const HomeGames = ({ games, setGame }: any) => {
         <>
           <Card.Group centered>
             {chunk.map((game: any) => (
-              <HomeGame {...{ game, setGame }} />
+              <HomeGame {...{ game }} />
             ))}
           </Card.Group>
           <Ads />
@@ -132,15 +132,15 @@ const HomeGames = ({ games, setGame }: any) => {
   );
 };
 
-const HomeGame = ({ game, setGame }: any) => {
+const HomeGame = ({ game }: any) => {
   const navigate = useNavigate();
   const formattedDate = formatDateTime(game.time);
 
   return (
     <Card
       onClick={() => {
-        setGame(game);
-        navigate("?page=Game");
+        const gameHashed = btoa(transliterate(JSON.stringify(game)));
+        navigate(`/Game?g=${gameHashed}`);
       }}
       color="yellow"
     >
