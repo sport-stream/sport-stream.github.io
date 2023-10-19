@@ -11,6 +11,7 @@ export const transliterate = function (text: string) {
     р: "p",
     Р: "P",
     о: "o",
+    О: "O",
   };
   const trans = (text: string, letter: keyof typeof dictionary) => {
     return text.split(letter).join(dictionary[letter]);
