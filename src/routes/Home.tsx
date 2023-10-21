@@ -3,6 +3,7 @@ import {
   Container,
   Divider,
   Dropdown,
+  Header,
   Icon,
   Image,
   Input,
@@ -117,6 +118,14 @@ export const Home = (props: { data: any }) => {
 };
 
 const HomeGames = ({ games }: any) => {
+  const { favorites } = useFavorites();
+  const favoriteGames = games?.filter((game: any) => {
+    const isLeagueFavorite = favorites.includes(game.league);
+    const isHomeTeamFavorite = favorites.includes(game.teams.homeTeam);
+    const isAwayTeamFavorite = favorites.includes(game.teams.awayTeam);
+    return isLeagueFavorite || isHomeTeamFavorite || isAwayTeamFavorite;
+  });
+
   const chunkedGames = games?.reduce(
     (acc: any, game: any) => {
       const lastChunk = acc[acc.length - 1];
@@ -131,6 +140,36 @@ const HomeGames = ({ games }: any) => {
   );
   return (
     <>
+      <Container>
+        <Segment inverted>
+          <Header as="h4" icon textAlign="center" color="yellow">
+            <Icon name="star" circular color="yellow" />
+            <Header.Content>Favorites Games:</Header.Content>
+          </Header>
+          {!favoriteGames?.length && (
+            <Header as="h5" icon textAlign="center">
+              <Header.Content>
+                To add favorite games click on the star icon
+              </Header.Content>
+            </Header>
+          )}
+        </Segment>
+      </Container>
+      <Divider />
+      <Card.Group centered>
+        {favoriteGames?.map((game: any) => (
+          <HomeGame {...{ game }} />
+        ))}
+      </Card.Group>
+      <Divider />
+      <Container textAlign="center">
+        <Segment inverted>
+          <Header as="h4" icon textAlign="center">
+            <Header.Content>All Games:</Header.Content>
+          </Header>
+        </Segment>
+      </Container>
+      <Divider />
       {chunkedGames?.map((chunk: any) => (
         <>
           <Card.Group centered>
@@ -161,7 +200,12 @@ const HomeGame = ({ game }: any) => {
         const gameHashed = btoa(transliterate(JSON.stringify(game)));
         navigate(`/Game?g=${gameHashed}`);
       }}
-      color="yellow"
+      color={isFavorite ? "yellow" : "green"}
+      style={{
+        width: 300,
+        margin: 10,
+        backgroundColor: isFavorite ? "#FFFACD" : "white",
+      }}
     >
       <Card.Content>
         <Popup
@@ -233,7 +277,7 @@ const HomeGame = ({ game }: any) => {
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
             fontSize: 14,
-            width: "83%",
+            width: "82%",
             margin: "auto",
             marginTop: -5,
           }}
