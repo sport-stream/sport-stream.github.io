@@ -3,9 +3,11 @@ import {
   Container,
   Divider,
   Dropdown,
+  Icon,
   Image,
   Input,
   Label,
+  Popup,
   Segment,
 } from "semantic-ui-react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -15,6 +17,7 @@ import { Ads } from "../ads";
 import React, { useEffect } from "react";
 import { transliterate } from "../utils/lang";
 import ReactGA from "react-ga";
+import { useFavorites } from "../hooks/useFavorites";
 
 const defaultLeagueOption = {
   key: "empty",
@@ -144,6 +147,12 @@ const HomeGames = ({ games }: any) => {
 
 const HomeGame = ({ game }: any) => {
   const navigate = useNavigate();
+  const { favorites, addFavorite, removeFavorite } = useFavorites();
+  const isLeagueFavorite = favorites.includes(game.league);
+  const isHomeTeamFavorite = favorites.includes(game.teams.homeTeam);
+  const isAwayTeamFavorite = favorites.includes(game.teams.awayTeam);
+  const isFavorite =
+    isLeagueFavorite || isHomeTeamFavorite || isAwayTeamFavorite;
   const formattedDate = formatDateTime(game.time);
 
   return (
@@ -155,13 +164,78 @@ const HomeGame = ({ game }: any) => {
       color="yellow"
     >
       <Card.Content>
+        <Popup
+          inverted
+          trigger={
+            <Icon
+              style={{
+                zIndex: 2,
+                position: "absolute",
+                top: 5,
+                left: 5,
+                backgroundColor: "black",
+              }}
+              circular
+              color="yellow"
+              name={isHomeTeamFavorite ? "star" : "star outline"}
+              onClick={(e: any) => {
+                e.stopPropagation();
+                if (isHomeTeamFavorite) {
+                  removeFavorite(game.teams.homeTeam);
+                } else {
+                  addFavorite(game.teams.homeTeam);
+                }
+              }}
+            />
+          }
+          content={
+            isHomeTeamFavorite
+              ? `Remove ${game.teams.homeTeam} from favorites teams`
+              : `Add ${game.teams.homeTeam} to favorites teams`
+          }
+          position="top left"
+        />
+        <Popup
+          inverted
+          trigger={
+            <Icon
+              style={{
+                zIndex: 2,
+                position: "absolute",
+                top: 5,
+                right: 5,
+                backgroundColor: "black",
+              }}
+              circular
+              color="yellow"
+              name={isAwayTeamFavorite ? "star" : "star outline"}
+              onClick={(e: any) => {
+                e.stopPropagation();
+                if (isAwayTeamFavorite) {
+                  removeFavorite(game.teams.awayTeam);
+                } else {
+                  addFavorite(game.teams.awayTeam);
+                }
+              }}
+            />
+          }
+          content={
+            isAwayTeamFavorite
+              ? `Remove ${game.teams.awayTeam} from favorites teams`
+              : `Add ${game.teams.awayTeam} to favorites teams`
+          }
+          position="top right"
+        />
         <Card.Header
           textAlign="center"
           style={{
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-            fontSize: 16,
+            fontSize: 14,
+            width: "83%",
+            margin: "auto",
+            marginTop: -5,
           }}
         >
           <u>
@@ -188,6 +262,30 @@ const HomeGame = ({ game }: any) => {
           whiteSpace: "nowrap",
         }}
       >
+        <Popup
+          inverted
+          trigger={
+            <Icon
+              style={{ zIndex: 2 }}
+              color="yellow"
+              name={isLeagueFavorite ? "star" : "star outline"}
+              onClick={(e: any) => {
+                e.stopPropagation();
+                if (isLeagueFavorite) {
+                  removeFavorite(game.league);
+                } else {
+                  addFavorite(game.league);
+                }
+              }}
+            />
+          }
+          content={
+            isLeagueFavorite
+              ? `Remove ${game.league} from favorites leagues`
+              : `Add ${game.league} to favorites leagues`
+          }
+          position="bottom left"
+        />
         {game.league}
       </Label>
     </Card>
