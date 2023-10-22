@@ -5,8 +5,8 @@ export const Ads = () => {
     <Container textAlign="center" style={{ marginTop: 20 }}>
       <iframe
         title="a-ads"
-        data-aa="2267952"
-        src="//ad.a-ads.com/2267952?size=728x90"
+        data-aa="2270484"
+        src="//ad.a-ads.com/2270484?size=728x90"
         style={{
           width: "728px",
           height: "90px",
