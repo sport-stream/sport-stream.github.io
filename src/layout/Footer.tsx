@@ -4,7 +4,10 @@ const Footer = (props: any) => {
   return (
     <Menu fixed="bottom" inverted>
       <Segment inverted textAlign="center">
-        <p>Copyright © Nivdal Global Games 2014-{new Date().getFullYear()}</p>
+        <p>
+          Copyright © <a href="https://sport-stream.github.io">Sport-Stream</a>
+          Games 2014-{new Date().getFullYear()}
+        </p>
       </Segment>
     </Menu>
   );
