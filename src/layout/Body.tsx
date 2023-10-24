@@ -24,7 +24,14 @@ const Body = () => {
   const { data, error, loading } = useFetch(sheetUrl);
 
   return (
-    <div style={{ marginTop: "7em" }}>
+    <div
+      style={{
+        marginTop: "2%",
+        overflowY: "scroll",
+        overflowX: "hidden",
+        height: "92vh",
+      }}
+    >
       {error ? <p>{JSON.stringify(error)} </p> : null}
       <Dimmer active={loading}>
         <Loader size="massive">Loading</Loader>
