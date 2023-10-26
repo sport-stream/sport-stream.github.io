@@ -34,7 +34,7 @@ const SearchGames = ({
   leagues: unknown[];
   setLeague: any;
   setSearch: any;
-  search: string | null;
+  search: string;
 }) => (
   <Container textAlign="center">
     <Segment>
@@ -71,11 +71,11 @@ export const Home = (props: { data: any }) => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
   const location = useLocation();
-  const [search, setSearch] = React.useState<string | null>(null);
+  const [search, setSearch] = React.useState<string>("");
   useEffect(() => {
     const parameters = new URLSearchParams(location.search);
     const sQuery = parameters.get("s");
-    setSearch(sQuery);
+    setSearch(sQuery || "");
   }, [location]);
 
   const allGames = props.data?.values?.[0].map(JSON.parse);
@@ -92,7 +92,7 @@ export const Home = (props: { data: any }) => {
         !league || league === "Select League" || game.league === league
     )
     .filter((game: any) => {
-      if (!search) return true;
+      if (!search?.length) return true;
       const searchLower: string = search.toLowerCase();
       const homeTeam: string = transliterate(game.teams.homeTeam).toLowerCase();
       const homeCondition = `${homeTeam}`.includes(searchLower);
