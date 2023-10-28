@@ -2,7 +2,7 @@ import { Menu, Segment } from "semantic-ui-react";
 
 const Footer = (props: any) => {
   return (
-    <Menu fixed="bottom" inverted>
+    <Menu id="footer" fixed="bottom" inverted>
       <Segment inverted textAlign="center">
         <p>
           Copyright © <a href="https://sport-stream.github.io">Sport-Stream</a>
