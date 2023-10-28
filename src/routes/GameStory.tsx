@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Transition } from "semantic-ui-react";
 import Background from "../static/img/gameStoryBG.jpg";
 import VS from "../static/img/vs.png";
@@ -9,6 +9,12 @@ import { formatDateTime } from "../utils/date";
 
 export const GameStory = () => {
   const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setVisible(true);
+    }, 2000);
+  }, []);
+
   const { search } = useLocation();
   const parameters = new URLSearchParams(search);
   const gameHashed = parameters.get("g");
@@ -26,6 +32,7 @@ export const GameStory = () => {
   if (!game) return null;
   return (
     <Container
+      id="gameStory"
       textAlign="center"
       style={{
         backgroundColor: "black",
