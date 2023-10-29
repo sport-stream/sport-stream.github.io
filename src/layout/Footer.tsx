@@ -5,7 +5,7 @@ const Footer = (props: any) => {
     <Menu id="footer" fixed="bottom" inverted>
       <Segment inverted textAlign="center">
         <p>
-          Copyright © <a href="https://sport-stream.github.io">Sport-Stream</a>
+          Copyright © <a href="https://sport-stream.github.io">Sport-Stream </a>
           Games 2014-{new Date().getFullYear()}
         </p>
       </Segment>

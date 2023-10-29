@@ -157,8 +157,8 @@ const HomeGames = ({ games }: any) => {
       </Container>
       <Divider />
       <Card.Group centered>
-        {favoriteGames?.map((game: any) => (
-          <HomeGame {...{ game }} />
+        {favoriteGames?.map((game: any, i: number) => (
+          <HomeGame key={i} {...{ game }} />
         ))}
       </Card.Group>
       <Divider />
@@ -170,15 +170,13 @@ const HomeGames = ({ games }: any) => {
         </Segment>
       </Container>
       <Divider />
-      {chunkedGames?.map((chunk: any) => (
-        <>
-          <Card.Group centered>
-            {chunk.map((game: any) => (
-              <HomeGame {...{ game }} />
-            ))}
-          </Card.Group>
+      {chunkedGames?.map((chunk: any, x: number) => (
+        <Card.Group key={x} centered>
+          {chunk.map((game: any, i: number) => (
+            <HomeGame key={i} {...{ game }} />
+          ))}
           <Ads />
-        </>
+        </Card.Group>
       ))}
     </>
   );

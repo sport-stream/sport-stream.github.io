@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import Watch from "../static/img/watch.png";
 import { formatDateTime } from "../utils/date";
-import { Ads, InvisibleAds } from "../ads";
+import { Ads } from "../ads";
 // import CopyLinkIcon from "../static/img/copyLink.png";
 
 export const Game = (props: any) => {
@@ -24,7 +24,6 @@ export const Game = (props: any) => {
   if (!game) return null;
   return (
     <Segment style={{ backgroundColor: "white" }}>
-      <InvisibleAds />
       <Header textAlign="center">
         {game.teams.homeTeam} <span> vs </span> {game.teams.awayTeam}
       </Header>
@@ -54,8 +53,8 @@ const GameLinks = ({ links }: any) => {
     );
   return (
     <Card.Group centered>
-      {links?.map(({ link, rate, svg }: any) => (
-        <GameLink {...{ rate, link, svg }} />
+      {links?.map(({ link, rate, svg }: any, i: number) => (
+        <GameLink key={i} {...{ rate, link, svg }} />
       ))}
     </Card.Group>
   );
@@ -66,7 +65,8 @@ const GameLink = ({ rate, link, svg }: any) => {
   return (
     <>
       <Card
-        color="green"
+        color="yellow"
+        style={{ backgroundColor: "#FFFACD" }}
         onClick={() => {
           const encodedLink = btoa(link);
           navigate(`/Video?v=${encodedLink}`);
