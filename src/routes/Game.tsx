@@ -54,14 +54,14 @@ const GameLinks = ({ links }: any) => {
     );
   return (
     <Card.Group centered>
-      {links?.map(({ link, rate }: any) => (
-        <GameLink {...{ rate, link }} />
+      {links?.map(({ link, rate, svg }: any) => (
+        <GameLink {...{ rate, link, svg }} />
       ))}
     </Card.Group>
   );
 };
 
-const GameLink = ({ rate, link }: any) => {
+const GameLink = ({ rate, link, svg }: any) => {
   const navigate = useNavigate();
   return (
     <>
@@ -76,7 +76,7 @@ const GameLink = ({ rate, link }: any) => {
           <List>
             <List.Item>
               <Image avatar src={Watch} />
-              {/* <Image size="mini" floated="right" src={CopyLinkIcon} /> */}
+              {svg && <Image floated="right" size="mini" src={svg} />}
               <List.Content>
                 <List.Header as="a">
                   <b>Watch Now</b>
