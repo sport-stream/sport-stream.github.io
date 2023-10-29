@@ -19,6 +19,7 @@ export const GameStory = () => {
   const parameters = new URLSearchParams(search);
   const gameHashed = parameters.get("g");
   const game = gameHashed && JSON.parse(atob(gameHashed));
+  console.info(game);
 
   const leftClubName = game?.teams.homeTeam;
   const rightClubName = game?.teams.awayTeam;

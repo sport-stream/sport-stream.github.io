@@ -3,7 +3,6 @@ import ReactGA from "react-ga";
 import { Body, Footer, Header, Left, Right } from "./layout";
 import { Grid } from "semantic-ui-react";
 import { useEffect, useState } from "react";
-import { InvisibleAds } from "./ads";
 
 ReactGA.initialize("G-3D65M2L9LS");
 
@@ -24,7 +23,6 @@ function App() {
 
   return (
     <>
-      <InvisibleAds />
       <Header />
       <Grid>
         <Grid.Row>

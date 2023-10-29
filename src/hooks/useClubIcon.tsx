@@ -12,6 +12,6 @@ export const useClubIcon = (clubName: string) => {
   const mostSimilarClub = getMostSimilarClub(clubName);
   if (!mostSimilarClub) return defaultClubIcon;
   const teamId = (TTII as any)[mostSimilarClub];
-
-  return `https://media.api-sports.io/football/teams/${teamId}.png`;
+  const src = `https://media.api-sports.io/football/teams/${teamId}.png`;
+  return src;
 };

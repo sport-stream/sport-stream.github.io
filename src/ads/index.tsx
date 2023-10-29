@@ -72,7 +72,7 @@ export const InvisibleAds = () => {
           height: "100%",
         }}
         onMouseMove={(e: any) => {
-          setMousePosition({ x: e.clientX - 300, y: e.clientY - 30 });
+          setMousePosition({ x: e.clientX - 300, y: e.clientY - 100 });
         }}
       />
       <Container
