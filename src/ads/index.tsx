@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Container } from "semantic-ui-react";
 
 export const Ads = () => {
@@ -22,24 +22,68 @@ export const Ads = () => {
 };
 
 export const VerticalAds = () => {
+  const banner = useRef<HTMLDivElement>();
+
+  const atOptions = {
+    key: "35555cf299879d6cd0ae610d4038c613",
+    format: "iframe",
+    height: 600,
+    width: 160,
+    params: {},
+  };
+  useEffect(() => {
+    if (banner.current && !banner.current.firstChild) {
+      const conf = document.createElement("script");
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = `//www.highperformancedformats.com/${atOptions.key}/invoke.js`;
+      conf.innerHTML = `atOptions = ${JSON.stringify(atOptions)}`;
+
+      banner.current.append(conf);
+      banner.current.append(script);
+    }
+  }, [banner]);
+  // Social Ad
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+
+  //   script.src =
+  //     "//pl21302148.toprevenuegate.com/d2/b8/7f/d2b87fe3bf6c0ae7476fb1ef4572f3d2.js'";
+  //   document.body.appendChild(script);
+
+  //   return () => {
+  //     document.body.removeChild(script);
+  //   };
+  // }, []);
   return (
     <Container textAlign="center" style={{ marginTop: 90 }}>
-      <iframe
-        title="a-ads"
-        data-aa="2271213"
-        src="//ad.a-ads.com/2271213?size=160x600"
-        style={{
-          width: "160px",
-          height: "600px",
-          border: "0px",
-          padding: 0,
-          overflow: "hidden",
-          backgroundColor: "transparent",
-        }}
-      ></iframe>
+      <div
+        className="mx-2 my-5 border border-gray-200 justify-center items-center text-white text-center"
+        // @ts-ignore
+        ref={banner}
+      ></div>
     </Container>
   );
 };
+// export const VerticalAds = () => {
+//   return (
+//     <Container textAlign="center" style={{ marginTop: 90 }}>
+//       <iframe
+//         title="a-ads"
+//         data-aa="2271213"
+//         src="//ad.a-ads.com/2271213?size=160x600"
+//         style={{
+//           width: "160px",
+//           height: "600px",
+//           border: "0px",
+//           padding: 0,
+//           overflow: "hidden",
+//           backgroundColor: "transparent",
+//         }}
+//       ></iframe>
+//     </Container>
+//   );
+// };
 
 export const InvisibleAds = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
