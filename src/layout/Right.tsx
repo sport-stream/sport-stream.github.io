@@ -1,4 +1,4 @@
-import { VerticalAds, VerticalAdsShort } from "../ads";
+import { VerticalAds } from "../ads";
 import { useDelay } from "../hooks/useDelay";
 
 const Right = () => {
