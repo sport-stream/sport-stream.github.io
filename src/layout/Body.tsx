@@ -10,19 +10,32 @@ import { GameStory } from "../routes/GameStory";
 const SHEET_ID = "15dkqaVpI8xbAOP7pQfQlHRfqV-l_jQVPt-ni8nMw62Y";
 const PUBLIC_API_KEY = "AIzaSyCqYJKdcZo3j6wI6HLmJrUnCP92L-iuE7I";
 
-const getTodaySheet = () => {
+const getTodaySheet = (sport = "soccer") => {
   const todayDate = new Date();
   todayDate.setMinutes(todayDate.getMinutes() - 15);
 
   const newFormat = `${todayDate.getFullYear()}-${todayDate.getDate()}-${
     todayDate.getMonth() + 1
   }`;
-  return `${newFormat}-Games`;
+  return `${newFormat}-${sport === "soccer" ? "Games" : sport}`;
 };
 
 const Body = () => {
-  const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${getTodaySheet()}!1:1?key=${PUBLIC_API_KEY}`;
-  const { data, error, loading } = useFetch(sheetUrl);
+  const sheetUrlSoccer = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${getTodaySheet()}!1:1?key=${PUBLIC_API_KEY}`;
+  const sheetUrlBasketball = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${getTodaySheet(
+    "basketball"
+  )}!1:1?key=${PUBLIC_API_KEY}`;
+  const {
+    data: soccerData,
+    error: soccerError,
+    loading: soccerLoading,
+  } = useFetch(sheetUrlSoccer);
+
+  const {
+    data: basketballData,
+    error: basketballError,
+    loading: basketballLoading,
+  } = useFetch(sheetUrlBasketball);
 
   return (
     <div
@@ -33,12 +46,25 @@ const Body = () => {
         height: "92vh",
       }}
     >
-      {error ? <p>{JSON.stringify(error)} </p> : null}
-      <Dimmer active={loading}>
+      {soccerError || basketballError ? (
+        <p>{JSON.stringify(soccerError || basketballError)} </p>
+      ) : null}
+      <Dimmer active={soccerLoading || basketballLoading}>
         <Loader size="massive">Loading</Loader>
       </Dimmer>
       <Routes>
-        <Route index element={<Home {...{ data }} />} />
+        <Route
+          index
+          element={<Home {...{ data: soccerData, sport: "soccer" }} />}
+        />
+        <Route
+          path="/Soccer"
+          element={<Home {...{ data: soccerData, sport: "soccer" }} />}
+        />
+        <Route
+          path="/Basketball"
+          element={<Home {...{ data: basketballData, sport: "basketball" }} />}
+        />
         <Route path="/Game" element={<Game />} />
         <Route path="/Video" element={<Video />} />
         <Route path="/GameStory" element={<GameStory />} />
