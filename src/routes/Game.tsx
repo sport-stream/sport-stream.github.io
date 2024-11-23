@@ -47,10 +47,40 @@ export const Game = (props: any) => {
 };
 
 const GameLinks = ({ links }: any) => {
-  if (!links.length)
+  if (!links.length) {
+    const videos = [
+      "https://www.youtube.com/embed/YvUKNMfPwwg",
+      "https://www.youtube.com/embed/v5G4EaJBsA4",
+      "https://www.youtube.com/embed/Uolw-G1kvZc",
+      "https://www.youtube.com/embed/daE1IqYL3VA",
+      "https://www.youtube.com/embed/NvTuadLHezI",
+      // "https://www.youtube.com/embed/Uolw-G1kvZc",
+      // "https://www.youtube.com/embed/Uolw-G1kvZc",
+    ];
+    const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+
     return (
-      <Segment>links will be ready 30-15 min before the game started</Segment>
+      <Segment textAlign="center">
+        <Header as="h3" style={{ marginBottom: "1em" }}>
+          Links will be available 30-15 minutes before the game starts.
+        </Header>
+        <p style={{ fontSize: "1.1em", color: "grey" }}>
+          Until then, you can watch this video. Please refresh the page when the
+          game starts.
+        </p>
+        <Divider />
+        <iframe
+          width="560"
+          height="315"
+          src={`${randomVideo}?autoplay=1&start=3`}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </Segment>
     );
+  }
   return (
     <Card.Group centered>
       {links?.map(({ link, rate, svg }: any, i: number) => (

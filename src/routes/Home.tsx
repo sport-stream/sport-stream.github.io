@@ -25,6 +25,7 @@ const defaultLeagueOption = {
   text: "Select League",
   value: "Select League",
 };
+
 const SearchGames = ({
   leagues,
   setLeague,
@@ -36,9 +37,15 @@ const SearchGames = ({
   setSearch: any;
   search: string;
 }) => (
-  <Container textAlign="center">
-    <Segment>
+  <Container textAlign="center" style={{ marginTop: "20px" }}>
+    <Segment raised>
       <Input
+        fluid
+        size="large"
+        icon="search"
+        iconPosition="left"
+        placeholder="Search Game or League..."
+        value={search}
         onChange={(_e, { value }) => setSearch(value)}
         action={
           <Dropdown
@@ -57,10 +64,10 @@ const SearchGames = ({
             defaultValue="Select League"
           />
         }
-        icon="search"
-        iconPosition="left"
-        placeholder="Search Game or League..."
-        value={search}
+        style={{
+          borderRadius: "25px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        }}
       />
     </Segment>
   </Container>
@@ -111,7 +118,7 @@ export const Home = (props: { data: any }) => {
       <Divider />
       <SearchGames {...{ leagues, setLeague, setSearch, search }} />
       <Divider />
-      <HomeGames {...{ games }} />;
+      <HomeGames {...{ games }} />
       <Ads />
     </>
   );
@@ -138,16 +145,17 @@ const HomeGames = ({ games }: any) => {
     },
     [[]]
   );
+
   return (
     <>
       <Container>
-        <Segment inverted>
-          <Header as="h4" icon textAlign="center" color="yellow">
-            <Icon name="star" circular color="yellow" />
-            <Header.Content>Favorites Games:</Header.Content>
+        <Segment inverted color="yellow" textAlign="center">
+          <Header as="h2" icon>
+            <Icon name="star" circular />
+            <Header.Content>Favorites Games</Header.Content>
           </Header>
           {!favoriteGames?.length && (
-            <Header as="h5" icon textAlign="center">
+            <Header as="h4" icon>
               <Header.Content>
                 To add favorite games click on the star icon
               </Header.Content>
@@ -163,9 +171,10 @@ const HomeGames = ({ games }: any) => {
       </Card.Group>
       <Divider />
       <Container textAlign="center">
-        <Segment inverted>
-          <Header as="h4" icon textAlign="center">
-            <Header.Content>All Games:</Header.Content>
+        <Segment inverted color="green" textAlign="center">
+          <Header as="h2" icon>
+            <Icon name="soccer" circular />
+            <Header.Content>All Games</Header.Content>
           </Header>
         </Segment>
       </Container>
@@ -203,6 +212,17 @@ const HomeGame = ({ game }: any) => {
         width: 300,
         margin: 10,
         backgroundColor: isFavorite ? "#FFFACD" : "white",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        borderRadius: "15px",
+      }}
+      onMouseEnter={(e: any) => {
+        e.currentTarget.style.transform = "scale(1.05)";
+        e.currentTarget.style.boxShadow = "0 8px 16px rgba(0, 0, 0, 0.2)";
+      }}
+      onMouseLeave={(e: any) => {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
       }}
     >
       <Card.Content>
@@ -274,7 +294,8 @@ const HomeGame = ({ game }: any) => {
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-            fontSize: 14,
+            fontSize: 16,
+            fontWeight: "bold",
             width: "82%",
             margin: "auto",
             marginTop: -5,
@@ -302,6 +323,8 @@ const HomeGame = ({ game }: any) => {
           overflow: "hidden",
           textOverflow: "ellipsis",
           whiteSpace: "nowrap",
+          borderBottomLeftRadius: "15px",
+          borderBottomRightRadius: "15px",
         }}
       >
         <Popup
