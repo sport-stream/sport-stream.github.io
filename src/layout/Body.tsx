@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Video } from "../routes/Video";
 import { Game } from "../routes/Game";
 import { Home } from "../routes/Home";
@@ -37,11 +37,16 @@ const Body = () => {
     loading: basketballLoading,
   } = useFetch(sheetUrlBasketball);
 
+  const { pathname } = useLocation();
+  console.info(`📝 ~ Body ~ pathname:`, pathname);
   return (
     <div
       style={{
         marginTop: "2%",
-        overflowY: "scroll",
+        //if chosen route is video set overflowY to be hidden
+        overflowY: pathname.toLowerCase().includes("video")
+          ? "hidden"
+          : "scroll",
         overflowX: "hidden",
         height: "92vh",
       }}

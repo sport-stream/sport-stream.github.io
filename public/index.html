@@ -26,6 +26,19 @@
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
   <meta name="netpub_026aaf731ba165c59ad96a1caa7904b8"
     content="026aaf731ba165c59ad96a1caa7904b8_7f7d2648544f867563afb628d9a67ce4" />
+  <!-- the following script is used to remove the /?/ from the url -->
+  <script type="text/javascript">
+    (function (l) {
+      if (l.search[1] === '/') {
+        var decoded = l.search.slice(1).split('&').map(function (s) {
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    }(window.location))
+  </script>
   <!-- google a here: -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3D65M2L9LS"></script>
   <script>
