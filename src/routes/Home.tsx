@@ -155,11 +155,13 @@ const HomeGames = ({ games }: any) => {
             <Header.Content>Favorites Games</Header.Content>
           </Header>
           {!favoriteGames?.length && (
-            <Header as="h4" icon>
-              <Header.Content>
-                To add favorite games click on the star icon
-              </Header.Content>
-            </Header>
+            <Container color="yellow" textAlign="center">
+              <Header inverted as="h4" icon>
+                <Header.Content>
+                  To add favorite games click on the star icon
+                </Header.Content>
+              </Header>
+            </Container>
           )}
         </Segment>
       </Container>
